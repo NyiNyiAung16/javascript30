@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum Kit</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">clap</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">hihat</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">kick</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">openhat</span>
+        </div>
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">boom</span>
+        </div>
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">ride</span>
+        </div>
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">snare</span>
+        </div>
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">tom</span>
+        </div>
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">tink</span>
+        </div>
+    </div>
+
+    <audio data-key="65" src="./sound/Clap_89_14.wav"></audio>
+    <audio data-key="83" src="./sound/35_HiHat_15_100_SP.wav"></audio>
+    <audio data-key="68" src="./sound/Kick_19_828.wav"></audio>
+    <audio data-key="70" src="./sound/OpenHat_07_27_SP.wav"></audio>
+    <audio data-key="71" src="./sound/Bm_Boomwhacker_02_582.wav"></audio>
+    <audio data-key="72" src="./sound/51_1AMMugRide_823.wav"></audio>
+    <audio data-key="74" src="./sound/Snare_32_327.wav"></audio>
+    <audio data-key="75" src="./sound/TD6K_Tom_219_73_SP.wav"></audio>
+    <audio data-key="76" src="./sound/Tink_SP_160_01.wav"></audio>
+
+    <script>
+        window.addEventListener('keydown',function(e){
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            if(!audio) return;
+            audio.currentTime = 0;
+            audio.play();
+
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+            key.classList.add('playing');
+
+        });
+
+        function removeTransition(e){
+            if(e.propertyName !== 'transform') return;
+            e.target.classList.remove('playing');
+        }
+
+        const keys = document.querySelectorAll('.key');
+        keys.forEach((key)=>{
+            key.addEventListener('transitionend',removeTransition)
+        });
+
+    </script>
+</body>
+</html>
