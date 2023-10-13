@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing with css variables and js</title>
+</head>
+<body>
+    <h1>Update CSS Variables With <span class="h1">JS</span></h1>
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <input type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+        <label for="blur">Blur:</label>
+        <input type="range" name="blur" min="0" max="25"  value="10" data-sizing="px">
+
+        <label for="base">Base Color:</label>
+        <input type="color" name="base" value="#ffc600">
+    </div>
+
+    <img src="https://i.pinimg.com/564x/ab/22/93/ab22936cf626a445c0e3b61a6f6a7328.jpg" alt="img">
+
+    <style>
+
+        :root{
+            --spacing:10px;
+            --blur:10px;
+            --base:#ffc600;
+        }
+        img{
+            padding: var(--spacing);
+            background-color: var(--base);
+            filter: blur(var(--blur));
+            border-radius: 5px;
+        }
+        .h1{
+            color: var(--base);
+        }
+
+        /* these styles are not change */
+        body{
+            text-align: center;
+            background: #193549;
+            color: white;
+            font-size: 28px;
+            font-weight: 100;
+        }
+        img{
+            width: 500px;
+        }
+        .controls{
+            margin-bottom: 40px;
+        }
+    </style>
+
+
+    <script>
+        const inputs = document.querySelectorAll('.controls input');
+        
+        function handleUpdate(){
+            const suffix = this.dataset.sizing || '';
+            document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix);
+        }
+
+        inputs.forEach(input => input.addEventListener('input',handleUpdate));
+    </script>
+</body>
+</html>
