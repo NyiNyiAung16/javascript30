@@ -28,7 +28,15 @@ body{
     transform-origin: 100%;
     transition: all 0.05s cubic-bezier(0,2.47,1,1.21);
     position: relative;
-    /* linear(0 0%, 2.38 50.59%, 1 100%) */
+}
+.secondHand{
+    background-color: aqua;
+}
+.minHand{
+    background-color: rgb(212, 255, 0);
+}
+.hourHand{
+    background-color: rgb(255, 72, 0);
 }
 .dot{
     width: 5%;
