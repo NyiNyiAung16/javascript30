@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+  <style>
+    html, body {
+      margin: 0;
+    }
+    header{
+        min-width: 100vh;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0px;
+        gap: 10px;
+    }
+    header span{
+        font-size: 20px;
+    }
+    header input[type='range']{
+        min-width: 200px;
+    }
+    header input[type='color']{
+        min-width: 100px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+    <span>Pen Width</span>
+    <input type="range" id="range" min="2" max="80" value="2">
+    <span>Pen Color</span>
+    <input type="color" id="color">
+</header>
+
+
+
+<canvas id="draw" width="800" height="800"></canvas>
+
+
+<script>
+    const range = document.querySelector('#range');
+    const color = document.querySelector('#color');
+    const canvas = document.querySelector('#draw');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.strokeStyle = '#BADA55';
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    // ctx.globalCompositeOperation = 'multiply';
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    function draw(e){
+        if(!isDrawing) return;
+        //add feature range with pen width
+        color.addEventListener('change',()=> ctx.strokeStyle = color.value)
+        ctx.beginPath();
+        //start from
+        ctx.moveTo(lastX,lastY);
+        //go to
+        ctx.lineTo(e.offsetX,e.offsetY);
+        ctx.stroke();
+        [lastX,lastY] = [e.offsetX,e.offsetY];
+        //add feature range with pen width
+        range.addEventListener('change',()=> ctx.lineWidth = range.value)
+    }
+
+    canvas.addEventListener('mousemove',draw);
+    canvas.addEventListener('mousedown',(e) => {
+        isDrawing = true;
+        [lastX,lastY] = [e.offsetX,e.offsetY];     
+    });
+    canvas.addEventListener('mouseup',()=>isDrawing = false);
+    canvas.addEventListener('mouseout',()=> isDrawing = false);
+
+
+
+</script>
+
+</body>
+</html>
